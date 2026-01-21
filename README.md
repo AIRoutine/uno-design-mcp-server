@@ -1,191 +1,134 @@
-# Uno Design MCP Server
+# Monochrome Efficiency MCP Server
 
-A Model Context Protocol (MCP) server providing **UI/UX design principles and guidelines** for Uno Platform applications. This server focuses on design thinking, not code generation.
+**An opinionated MCP server for black/white/grayscale UI design with efficiency-first principles.**
 
-## Purpose
+No color choices. No design options. One system. Maximum efficiency.
 
-This MCP server helps AI assistants provide expert-level UI/UX design guidance for:
-- Mobile app design (iOS, Android)
-- Desktop app design (Windows, macOS, Linux)
-- Cross-platform responsive design
-- Accessibility and inclusive design
+---
 
-## Tools Available
+## Philosophy
 
-| Tool | Description |
-|------|-------------|
-| `design_principles` | Core UI/UX principles (hierarchy, consistency, feedback, accessibility, simplicity, affordance) |
-| `layout_patterns` | Layout composition guidelines (navigation, grids, responsive, spacing) |
-| `component_guidelines` | Design guidelines for UI components (buttons, inputs, cards, lists, dialogs, navigation, forms) |
-| `color_guidelines` | Color theory, palettes, semantic colors, contrast, dark mode |
-| `typography_guidelines` | Type scale, hierarchy, readability, font pairing, responsive typography |
-| `user_flow_patterns` | Common user flow patterns (onboarding, authentication, settings, search, CRUD) |
-| `mobile_patterns` | Mobile-specific patterns (touch targets, gestures, bottom navigation, swipe actions) |
-| `desktop_patterns` | Desktop-specific patterns (keyboard navigation, mouse interactions, window management, menus) |
-| `design_checklist` | Design review checklists (wireframe, visual design, prototype, final review) |
-| `accessibility_guidelines` | Comprehensive accessibility guidelines (visual, motor, cognitive, screen readers) |
+> "Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away."
+
+This MCP server enforces a strict monochrome design system:
+- **12-stop grayscale only** (#FFFFFF to #000000)
+- **No accent colors** - meaning through form, not color
+- **Efficiency-first** - click budgets, cognitive load reduction
+- **WCAG AAA contrast** - accessibility by default
+
+---
+
+## Tools (10 Fixed, No Parameters)
+
+| Tool | Purpose |
+|------|---------|
+| `efficiency_principles` | Click budgets, lean design manifesto |
+| `ux_laws` | Hick's, Fitts's, Miller's, Doherty Threshold |
+| `cognitive_load` | Progressive disclosure, chunking strategies |
+| `monochrome_system` | The grayscale palette and manifesto |
+| `contrast_system` | WCAG AAA contrast rules, text hierarchy |
+| `shape_language` | Form-based hierarchy, borders, shadows |
+| `responsive_system` | Breakpoints, touch targets |
+| `layout_patterns` | Navigation, grids, spacing |
+| `typography_system` | Type scale, weight-based hierarchy |
+| `component_guidelines` | Buttons, inputs, cards in grayscale |
+
+**All tools auto-trigger** based on context. No manual invocation needed.
+
+---
 
 ## Installation
 
-### Prerequisites
+### Claude Desktop
 
-- Python 3.10 or higher
-- pip (Python package manager)
-
-### Setup
-
-```bash
-# Clone or navigate to the repository
-cd /path/to/uno-design-mcp-server
-
-# Create virtual environment (optional but recommended)
-python -m venv .venv
-source .venv/bin/activate  # Linux/macOS
-# or
-.venv\Scripts\activate  # Windows
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-## Configuration
-
-### Claude Desktop Configuration
-
-Add to your Claude Desktop configuration (`claude_desktop_config.json`):
+Add to your `claude_desktop_config.json`:
 
 ```json
 {
   "mcpServers": {
-    "uno-design": {
-      "command": "python",
-      "args": ["/path/to/uno-design-mcp-server/server.py"],
-      "env": {}
+    "monochrome-design": {
+      "command": "dotnet",
+      "args": ["run", "--project", "/path/to/uno-design-mcp-server/src/UnoDesignMcpServer"]
     }
   }
 }
 ```
 
-### VS Code / Claude Code Configuration
+### Build from Source
 
-Add to your settings:
-
-```json
-{
-  "claude.mcpServers": {
-    "uno-design": {
-      "command": "python",
-      "args": ["${workspaceFolder}/server.py"]
-    }
-  }
-}
+```bash
+cd src/UnoDesignMcpServer
+dotnet build
+dotnet run
 ```
 
-## Usage Examples
+---
 
-Once configured, you can ask Claude questions like:
+## The Monochrome Palette
 
-**Design Principles:**
-- "What are the core principles of visual hierarchy?"
-- "How do I ensure consistency in my app design?"
-- "What feedback mechanisms should I implement?"
+```
+WHITE     #FFFFFF   Primary backgrounds
+Gray-50   #FAFAFA   Subtle backgrounds
+Gray-100  #F5F5F5   Card surfaces
+Gray-200  #EEEEEE   Borders, dividers
+Gray-300  #E0E0E0   Disabled backgrounds
+Gray-400  #BDBDBD   Placeholder text
+Gray-500  #9E9E9E   Secondary text
+Gray-600  #757575   Icons
+Gray-700  #616161   Body text
+Gray-800  #424242   Headlines
+Gray-900  #212121   Primary text
+BLACK     #000000   Maximum contrast
+```
 
-**Layout & Patterns:**
-- "What layout patterns work best for mobile apps?"
-- "How should I structure navigation for a desktop app?"
-- "What are the best practices for responsive design?"
+---
 
-**Components:**
-- "What are the guidelines for designing buttons?"
-- "How should I design form inputs?"
-- "What makes a good card component?"
+## Efficiency Principles
 
-**Mobile/Desktop Specific:**
-- "What touch target sizes should I use for mobile?"
-- "How do I implement swipe gestures correctly?"
-- "What keyboard shortcuts are standard?"
+### Click Budgets
+- **Daily tasks**: 1-2 clicks
+- **Weekly tasks**: 3-4 clicks
+- **Rare tasks**: 5+ clicks acceptable
 
-**Accessibility:**
-- "What contrast ratios do I need for accessibility?"
-- "How do I make my app keyboard-navigable?"
-- "What screen reader considerations should I have?"
+### The 4-Question Framework
+1. Can this be **removed**?
+2. Can this be **automated**?
+3. Can this be **combined**?
+4. Can this be **hidden** until needed?
+
+### UX Laws Applied
+- **Hick's Law**: Max 5-7 choices per menu
+- **Fitts's Law**: Touch targets 48dp minimum
+- **Miller's Law**: Chunk into 4±1 groups
+- **Doherty Threshold**: Response < 400ms
+
+---
 
 ## Directory Structure
 
 ```
 uno-design-mcp-server/
-├── server.py                 # Main MCP server
-├── pyproject.toml           # Python project config
-├── requirements.txt         # Dependencies
-├── README.md               # This file
+├── src/UnoDesignMcpServer/    # C# MCP Server
+│   ├── Program.cs
+│   ├── Tools/
+│   │   └── DesignGuidelinesTools.cs
+│   └── Services/
+│       └── ContentLoaderService.cs
 ├── docs/
-│   ├── principles/         # Core design principles
-│   │   ├── all.md
-│   │   ├── visual-hierarchy.md
-│   │   ├── consistency.md
-│   │   ├── feedback.md
-│   │   ├── simplicity.md
-│   │   ├── affordance.md
-│   │   ├── accessibility-all.md
-│   │   └── checklist-all.md
-│   ├── patterns/           # Layout & interaction patterns
-│   │   ├── mobile-all.md
-│   │   ├── desktop-all.md
-│   │   └── layout-all-both.md
-│   ├── components/         # Component guidelines
-│   │   └── all.md
-│   └── flows/              # User flow patterns
-│       └── all.md
-├── resources/
-│   ├── colors/             # Color guidelines
-│   │   └── all.md
-│   └── typography/         # Typography guidelines
-│       └── all.md
-└── examples/
-    ├── mobile/
-    ├── desktop/
-    └── responsive/
+│   ├── philosophy/            # Efficiency + Monochrome manifesto
+│   ├── monochrome/            # Contrast, shape language
+│   ├── laws/                  # UX laws
+│   ├── cognitive/             # Load reduction
+│   ├── responsive/            # Breakpoints, touch targets
+│   ├── patterns/              # Layout patterns
+│   └── components/            # Component guidelines
+└── resources/
+    ├── monochrome/            # Grayscale palette
+    └── typography/            # Type system
 ```
 
-## Key Design Focus Areas
-
-### For Mobile Apps
-- Touch-friendly interactions (44x44pt minimum targets)
-- Bottom navigation and thumb-zone design
-- Gesture-based interactions with button fallbacks
-- Pull-to-refresh and swipe actions
-
-### For Desktop Apps
-- Keyboard navigation and shortcuts
-- Hover states and mouse interactions
-- Multi-pane layouts and window management
-- Context menus and toolbar patterns
-
-### Cross-Platform
-- Responsive layouts that adapt
-- Consistent design language
-- Platform-appropriate conventions
-- Accessibility for all users
-
-## Contributing
-
-To add new design guidelines:
-
-1. Create a new markdown file in the appropriate directory
-2. Follow the existing documentation format
-3. Update the `server.py` if adding new tools
-4. Test the tool responses
-
-## Philosophy
-
-This MCP server embodies the perspective of an experienced UI/UX designer:
-
-- **User-centered**: Always prioritize user needs and mental models
-- **Platform-aware**: Respect platform conventions while maintaining brand consistency
-- **Accessibility-first**: Design for everyone from the start
-- **Practical**: Actionable guidelines, not just theory
-- **Visual**: Uses ASCII diagrams and examples extensively
+---
 
 ## License
 
-MIT License
+MIT

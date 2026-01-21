@@ -12,8 +12,8 @@
     <PackageId>AIRoutine.UnoDesignMcpServer</PackageId>
     <Version>1.0.0</Version>
     <Authors>AIRoutine</Authors>
-    <Description>MCP Server providing UX/UI design guidelines, principles, patterns, and resources for building consistent user interfaces with Uno Platform.</Description>
-    <PackageTags>mcp;uno-platform;design;ux;ui;guidelines</PackageTags>
+    <Description>MCP Server for Monochrome Efficiency Design System - opinionated black/white/grayscale UI guidelines with efficiency-first principles for Uno Platform.</Description>
+    <PackageTags>mcp;uno-platform;design;ux;ui;monochrome;efficiency;grayscale</PackageTags>
     <PackageProjectUrl>https://github.com/AIRoutine/uno-design-mcp-server</PackageProjectUrl>
     <RepositoryUrl>https://github.com/AIRoutine/uno-design-mcp-server</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
