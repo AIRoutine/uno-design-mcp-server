@@ -44,3 +44,14 @@ logs/
 # Local config
 .env
 .env.local
+
+# .NET
+bin/
+obj/
+*.dll
+*.pdb
+*.exe
+*.cache
+*.user
+*.suo
+*.nupkg

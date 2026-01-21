@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>UnoDesignMcpServer</RootNamespace>
+    <AssemblyName>UnoDesignMcpServer</AssemblyName>
+
+    <!-- NuGet Package Configuration -->
+    <PackageId>AIRoutine.UnoDesignMcpServer</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>AIRoutine</Authors>
+    <Description>MCP Server providing UX/UI design guidelines, principles, patterns, and resources for building consistent user interfaces with Uno Platform.</Description>
+    <PackageTags>mcp;uno-platform;design;ux;ui;guidelines</PackageTags>
+    <PackageProjectUrl>https://github.com/AIRoutine/uno-design-mcp-server</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/AIRoutine/uno-design-mcp-server</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ModelContextProtocol" Version="0.2.0-preview.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="docs\**\*" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="resources\**\*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
