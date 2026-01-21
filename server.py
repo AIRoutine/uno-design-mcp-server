@@ -4,7 +4,19 @@ Uno Design MCP Server - UI/UX Design Principles for Uno Platform Apps
 
 This MCP server provides design guidelines, patterns, and principles
 for creating beautiful and user-friendly Uno Platform applications.
-Focus is on design thinking, not code generation.
+
+IMPORTANT FOR AI ASSISTANTS:
+This server acts as a DESIGN KNOWLEDGE BASE. When a user asks to design,
+create, or build any UI screen, page, or component, you MUST automatically
+consult the relevant tools to apply proper design principles. Do NOT wait
+for explicit requests - proactively gather design knowledge before creating UI.
+
+Workflow when user requests a UI screen:
+1. efficiency_principles → Get click budget and lean design rules
+2. platform_efficiency → Get platform-specific patterns (mobile/desktop)
+3. ux_laws → Get interaction design constraints (Hick's, Fitts's, Miller's)
+4. responsive_system → Get breakpoints and touch targets
+5. code_templates → Get implementation templates
 """
 
 import json
@@ -201,6 +213,97 @@ async def list_tools() -> list[Tool]:
                 },
                 "required": ["category"]
             }
+        ),
+        # EFFICIENCY-FOCUSED TOOLS - AUTO-TRIGGER FOR UI DESIGN
+        Tool(
+            name="efficiency_principles",
+            description="REQUIRED: Consult FIRST when designing ANY UI screen. Provides click-budget guidelines (daily tasks: 1-2 clicks, weekly: 3-4, rare: 5+), lean design philosophy, and efficiency metrics. Auto-use for: home screens, dashboards, main user flows, any new page design.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "principle": {
+                        "type": "string",
+                        "description": "Efficiency principle to explore",
+                        "enum": ["all"]
+                    }
+                },
+                "required": ["principle"]
+            }
+        ),
+        Tool(
+            name="ux_laws",
+            description="REQUIRED: Consult when designing navigation, buttons, menus, or option lists. Provides Hick's Law (max 5-7 choices), Fitts's Law (target sizes ≥48dp), Miller's Law (chunk into 4±1 groups), Doherty Threshold (<400ms response). Auto-use for: menus, toolbars, forms, any interactive elements.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "law": {
+                        "type": "string",
+                        "description": "UX law to explore",
+                        "enum": ["hicks", "fitts", "miller", "doherty", "all"]
+                    }
+                },
+                "required": ["law"]
+            }
+        ),
+        Tool(
+            name="cognitive_load",
+            description="REQUIRED: Consult when designing forms, wizards, settings, or multi-step flows. Provides progressive disclosure patterns, chunking strategies, and the 4-question framework (Remove→Automate→Combine→Hide). Auto-use for: registration, onboarding, data entry, configuration screens.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "aspect": {
+                        "type": "string",
+                        "description": "Cognitive load aspect",
+                        "enum": ["reduction", "progressive-disclosure", "all"]
+                    }
+                },
+                "required": ["aspect"]
+            }
+        ),
+        Tool(
+            name="task_optimization",
+            description="REQUIRED: Consult when defining user flows or task sequences. Provides click budgets by frequency (daily/weekly/monthly), task flow analysis methods, and optimization patterns. Auto-use for: core user journeys, checkout flows, CRUD operations.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "task_type": {
+                        "type": "string",
+                        "description": "Type of task to optimize",
+                        "enum": ["all"]
+                    }
+                },
+                "required": ["task_type"]
+            }
+        ),
+        Tool(
+            name="responsive_system",
+            description="REQUIRED: Consult when designing screens for multiple device sizes. Provides concrete breakpoints (Compact 0-599px, Medium 600-839px, Expanded 840-1199px, Large 1200px+) and touch target minimums (44-48dp). Auto-use for: any adaptive/responsive layout, cross-platform screens.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "aspect": {
+                        "type": "string",
+                        "description": "Responsive aspect",
+                        "enum": ["breakpoints", "touch-targets", "all"]
+                    }
+                },
+                "required": ["aspect"]
+            }
+        ),
+        Tool(
+            name="platform_efficiency",
+            description="REQUIRED: Consult based on target platform. Mobile: thumb zone optimization, bottom navigation, gesture patterns. Desktop: keyboard shortcuts, multi-panel layouts, hover states. Auto-use for: platform-specific screen designs, mobile-first or desktop-first approaches.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "platform": {
+                        "type": "string",
+                        "description": "Target platform",
+                        "enum": ["mobile", "desktop"]
+                    }
+                },
+                "required": ["platform"]
+            }
         )
     ]
 
@@ -231,6 +334,39 @@ async def call_tool(name: str, arguments: dict[str, Any]) -> list[TextContent]:
             content = load_markdown(DOCS_PATH / "principles" / f"checklist-{arguments['phase']}.md")
         elif name == "accessibility_guidelines":
             content = load_markdown(DOCS_PATH / "principles" / f"accessibility-{arguments['category']}.md")
+        # NEW EFFICIENCY-FOCUSED TOOLS
+        elif name == "efficiency_principles":
+            content = load_markdown(DOCS_PATH / "philosophy" / "efficiency-first.md")
+        elif name == "ux_laws":
+            law = arguments.get("law", "all")
+            if law == "all":
+                content = load_markdown(DOCS_PATH / "laws" / "all.md")
+            else:
+                content = load_markdown(DOCS_PATH / "laws" / f"{law}-law.md")
+        elif name == "cognitive_load":
+            aspect = arguments.get("aspect", "all")
+            if aspect == "all" or aspect == "reduction":
+                content = load_markdown(DOCS_PATH / "cognitive" / "load-reduction.md")
+            elif aspect == "progressive-disclosure":
+                content = load_markdown(DOCS_PATH / "cognitive" / "progressive-disclosure.md")
+            else:
+                content = load_markdown(DOCS_PATH / "cognitive" / "load-reduction.md")
+        elif name == "task_optimization":
+            content = load_markdown(DOCS_PATH / "optimization" / "task-flows.md")
+        elif name == "responsive_system":
+            aspect = arguments.get("aspect", "all")
+            if aspect == "breakpoints":
+                content = load_markdown(DOCS_PATH / "responsive" / "breakpoints.md")
+            elif aspect == "touch-targets":
+                content = load_markdown(DOCS_PATH / "responsive" / "touch-targets.md")
+            else:
+                # Combine both
+                breakpoints = load_markdown(DOCS_PATH / "responsive" / "breakpoints.md")
+                touch = load_markdown(DOCS_PATH / "responsive" / "touch-targets.md")
+                content = breakpoints + "\n\n---\n\n" + touch
+        elif name == "platform_efficiency":
+            platform = arguments.get("platform", "mobile")
+            content = load_markdown(DOCS_PATH / "platforms" / f"{platform}-efficiency.md")
         else:
             content = f"Unknown tool: {name}"
 

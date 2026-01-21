@@ -108,4 +108,72 @@ public class DesignGuidelinesTools
     {
         return _loader.LoadDocs($"principles/accessibility-{category}.md");
     }
+
+    // EFFICIENCY-FOCUSED TOOLS - AUTO-TRIGGER FOR UI DESIGN
+
+    [McpServerTool(Name = "efficiency_principles")]
+    [Description("REQUIRED: Consult FIRST when designing ANY UI screen. Provides click-budget guidelines (daily tasks: 1-2 clicks, weekly: 3-4, rare: 5+), lean design philosophy, and efficiency metrics. Auto-use for: home screens, dashboards, main user flows, any new page design.")]
+    public string GetEfficiencyPrinciples(
+        [Description("Efficiency principle: all")]
+        string principle = "all")
+    {
+        return _loader.LoadDocs("philosophy/efficiency-first.md");
+    }
+
+    [McpServerTool(Name = "ux_laws")]
+    [Description("REQUIRED: Consult when designing navigation, buttons, menus, or option lists. Provides Hick's Law (max 5-7 choices), Fitts's Law (target sizes ≥48dp), Miller's Law (chunk into 4±1 groups), Doherty Threshold (<400ms response). Auto-use for: menus, toolbars, forms, any interactive elements.")]
+    public string GetUxLaws(
+        [Description("UX law: hicks, fitts, miller, doherty, or all")]
+        string law = "all")
+    {
+        if (law == "all")
+            return _loader.LoadDocs("laws/all.md");
+        return _loader.LoadDocs($"laws/{law}-law.md");
+    }
+
+    [McpServerTool(Name = "cognitive_load")]
+    [Description("REQUIRED: Consult when designing forms, wizards, settings, or multi-step flows. Provides progressive disclosure patterns, chunking strategies, and the 4-question framework (Remove→Automate→Combine→Hide). Auto-use for: registration, onboarding, data entry, configuration screens.")]
+    public string GetCognitiveLoad(
+        [Description("Cognitive load aspect: reduction, progressive-disclosure, or all")]
+        string aspect = "all")
+    {
+        if (aspect == "progressive-disclosure")
+            return _loader.LoadDocs("cognitive/progressive-disclosure.md");
+        return _loader.LoadDocs("cognitive/load-reduction.md");
+    }
+
+    [McpServerTool(Name = "task_optimization")]
+    [Description("REQUIRED: Consult when defining user flows or task sequences. Provides click budgets by frequency (daily/weekly/monthly), task flow analysis methods, and optimization patterns. Auto-use for: core user journeys, checkout flows, CRUD operations.")]
+    public string GetTaskOptimization(
+        [Description("Type of task to optimize: all")]
+        string taskType = "all")
+    {
+        return _loader.LoadDocs("optimization/task-flows.md");
+    }
+
+    [McpServerTool(Name = "responsive_system")]
+    [Description("REQUIRED: Consult when designing screens for multiple device sizes. Provides concrete breakpoints (Compact 0-599px, Medium 600-839px, Expanded 840-1199px, Large 1200px+) and touch target minimums (44-48dp). Auto-use for: any adaptive/responsive layout, cross-platform screens.")]
+    public string GetResponsiveSystem(
+        [Description("Responsive aspect: breakpoints, touch-targets, or all")]
+        string aspect = "all")
+    {
+        if (aspect == "breakpoints")
+            return _loader.LoadDocs("responsive/breakpoints.md");
+        if (aspect == "touch-targets")
+            return _loader.LoadDocs("responsive/touch-targets.md");
+
+        // Combine both for "all"
+        var breakpoints = _loader.LoadDocs("responsive/breakpoints.md");
+        var touchTargets = _loader.LoadDocs("responsive/touch-targets.md");
+        return breakpoints + "\n\n---\n\n" + touchTargets;
+    }
+
+    [McpServerTool(Name = "platform_efficiency")]
+    [Description("REQUIRED: Consult based on target platform. Mobile: thumb zone optimization, bottom navigation, gesture patterns. Desktop: keyboard shortcuts, multi-panel layouts, hover states. Auto-use for: platform-specific screen designs, mobile-first or desktop-first approaches.")]
+    public string GetPlatformEfficiency(
+        [Description("Target platform: mobile or desktop")]
+        string platform)
+    {
+        return _loader.LoadDocs($"platforms/{platform}-efficiency.md");
+    }
 }
